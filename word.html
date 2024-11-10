@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Search</title>
+    <style>
+        body {
+            background-color: black; /* 背景色設為黑色 */
+            color: white; /* 文字顏色設為白色 */
+        }
+        /* 可以根據需要添加其他 CSS 樣式 */
+    </style>
+</head>
+<body>
+    <h1>Dictionary Search</h1>
+    <input type="text" id="searchInput" placeholder="Enter a word">
+    <button onclick="searchDictionaries()">Search</button>
+
+    <script>
+        function searchDictionaries() {
+            var word = document.getElementById('searchInput').value;
+            if (word.trim() === '') {
+                alert('Please enter a word.');
+                return;
+            }
+
+            // URLs for your dictionaries
+            var yahooDictionaryURL = "https://tw.dictionary.yahoo.com/search?q=" + word;
+            var vocabularyURL = "https://www.vocabulary.com/dictionary/" + word;
+            var dictCNURL = "https://dict.cn/search?q=" + word;
+
+            // Open each URL in a new tab
+            window.open(yahooDictionaryURL, '_blank');
+            window.open(vocabularyURL, '_blank');
+            window.open(dictCNURL, '_blank');
+        }
+    </script>
+</body>
+</html>
