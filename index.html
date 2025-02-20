@@ -6,34 +6,54 @@
     <title>Dictionary Search</title>
     <style>
         body {
-            background-color: black; /* 背景色設為黑色 */
-            color: white; /* 文字顏色設為白色 */
+            background-color: black;
+            color: white;
+            text-align: center;
         }
-        /* 可以根據需要添加其他 CSS 樣式 */
+        input {
+            display: block;
+            margin: 5px auto;
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
     <h1>🔍</h1>
-    <input type="text" id="searchInput" placeholder="Enter a word">
+    
+    <div id="inputContainer">
+        <!-- 產生10個輸入框 -->
+        <script>
+            for (let i = 0; i < 10; i++) {
+                document.write('<input type="text" class="searchInput" placeholder="Enter a word">');
+            }
+        </script>
+    </div>
+    
     <button onclick="searchDictionaries()">Search</button>
 
     <script>
-        function searchDictionaries() {
-            var word = document.getElementById('searchInput').value;
-            if (word.trim() === '') {
-                alert('Please enter a word.');
-                return;
+        async function searchDictionaries() {
+            var inputs = document.getElementsByClassName('searchInput');
+            for (let i = 0; i < inputs.length; i++) {
+                let word = inputs[i].value.trim();
+                if (word !== '') {
+                    let yahooDictionaryURL = "https://tw.dictionary.yahoo.com/search?q=" + word;
+                    let vocabularyURL = "https://www.vocabulary.com/dictionary/" + word;
+                    let dictCNURL = "https://dict.cn/search?q=" + word;
+                    
+                    window.open(yahooDictionaryURL, '_blank');
+                    await new Promise(resolve => setTimeout(resolve, 800)); // 等待 800 毫秒
+                    window.open(vocabularyURL, '_blank');
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    window.open(dictCNURL, '_blank');
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                }
             }
-
-            // URLs for your dictionaries
-            var yahooDictionaryURL = "https://tw.dictionary.yahoo.com/search?q=" + word;
-            var vocabularyURL = "https://www.vocabulary.com/dictionary/" + word;
-            var dictCNURL = "https://dict.cn/search?q=" + word;
-
-            // Open each URL in a new tab
-            window.open(yahooDictionaryURL, '_blank');
-            window.open(vocabularyURL, '_blank');
-            window.open(dictCNURL, '_blank');
         }
     </script>
 </body>
