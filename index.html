@@ -8,6 +8,7 @@
         body {
             background-color: black;
             color: white;
+            font-family: Arial, sans-serif;
         }
         .input-container {
             display: flex;
@@ -19,13 +20,20 @@
             width: 20px;
             text-align: right;
             margin-right: 5px;
+            font-family: "Arial Rounded MT Bold", "Helvetica Rounded", sans-serif;
+            font-size: 14px;
         }
         input {
             padding: 5px;
             width: 200px;
         }
-        button {
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 230px;
             margin-top: 10px;
+        }
+        button {
             padding: 5px 10px;
         }
     </style>
@@ -42,7 +50,9 @@
         </script>
     </div>
     
-    <button onclick="searchDictionaries()">Search</button>
+    <div class="button-container">
+        <button onclick="searchDictionaries()">Search</button>
+    </div>
 
     <script>
         async function searchDictionaries() {
