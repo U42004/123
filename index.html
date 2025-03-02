@@ -29,12 +29,15 @@
         }
         .button-container {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             width: 230px;
             margin-top: 10px;
         }
         button {
             padding: 5px 10px;
+        }
+        .checkbox-container {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -42,7 +45,6 @@
     <h1>🔍</h1>
     
     <div id="inputContainer">
-        <!-- 產生10個輸入框 -->
         <script>
             for (let i = 1; i <= 10; i++) {
                 document.write('<div class="input-container"><span class="input-label">' + i + '.</span><input type="text" class="searchInput" placeholder="Enter a word"></div>');
@@ -51,25 +53,49 @@
     </div>
     
     <div class="button-container">
+        <button onclick="clearInputs()">Clear</button>
         <button onclick="searchDictionaries()">Search</button>
+    </div>
+    
+    <div class="checkbox-container">
+        <label><input type="checkbox" id="yahooCheck"> Yahoo 字典</label>
+        <label><input type="checkbox" id="vocabularyCheck"> Vocabulary</label>
+        <label><input type="checkbox" id="dictCNCheck"> Dict.cn</label>
     </div>
 
     <script>
+        function clearInputs() {
+            let inputs = document.getElementsByClassName('searchInput');
+            for (let input of inputs) {
+                input.value = '';
+            }
+        }
+
         async function searchDictionaries() {
             var inputs = document.getElementsByClassName('searchInput');
+            let yahooChecked = document.getElementById('yahooCheck').checked;
+            let vocabularyChecked = document.getElementById('vocabularyCheck').checked;
+            let dictCNChecked = document.getElementById('dictCNCheck').checked;
+            
+            let openYahoo = yahooChecked || (!yahooChecked && !vocabularyChecked && !dictCNChecked);
+            let openVocabulary = vocabularyChecked || (!yahooChecked && !vocabularyChecked && !dictCNChecked);
+            let openDictCN = dictCNChecked || (!yahooChecked && !vocabularyChecked && !dictCNChecked);
+            
             for (let i = 0; i < inputs.length; i++) {
                 let word = inputs[i].value.trim();
                 if (word !== '') {
-                    let yahooDictionaryURL = "https://tw.dictionary.yahoo.com/search?q=" + word;
-                    let vocabularyURL = "https://www.vocabulary.com/dictionary/" + word;
-                    let dictCNURL = "https://dict.cn/search?q=" + word;
-                    
-                    window.open(yahooDictionaryURL, '_blank');
-                    await new Promise(resolve => setTimeout(resolve, 800)); // 等待 800 毫秒
-                    window.open(vocabularyURL, '_blank');
-                    await new Promise(resolve => setTimeout(resolve, 800));
-                    window.open(dictCNURL, '_blank');
-                    await new Promise(resolve => setTimeout(resolve, 800));
+                    if (openYahoo) {
+                        window.open("https://tw.dictionary.yahoo.com/search?q=" + word, '_blank');
+                        await new Promise(resolve => setTimeout(resolve, 800));
+                    }
+                    if (openVocabulary) {
+                        window.open("https://www.vocabulary.com/dictionary/" + word, '_blank');
+                        await new Promise(resolve => setTimeout(resolve, 800));
+                    }
+                    if (openDictCN) {
+                        window.open("https://dict.cn/search?q=" + word, '_blank');
+                        await new Promise(resolve => setTimeout(resolve, 800));
+                    }
                 }
             }
         }
